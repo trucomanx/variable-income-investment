@@ -1,0 +1,22 @@
+{
+"CPFE3.SA":
+    {
+        "qty":124, 
+        "average-price":30.25
+    },
+"CMIG4.SA":
+    {
+        "qty":120, 
+        "average-price":11.39
+    },
+"BBAS3.SA":
+    {
+        "qty":42, 
+        "average-price":56.52
+    },
+"MEAL3.SA":
+    {
+        "qty":785, 
+        "average-price":2.66
+    }
+}
