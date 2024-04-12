@@ -2,7 +2,7 @@
 import sys
 import json
 
-from PySide6.QtWidgets import (QLabel,QLineEdit, QPushButton, QApplication,
+from PySide6.QtWidgets import (QTableWidget,QLabel,QLineEdit, QPushButton, QApplication,
     QHBoxLayout, QDialog)
     
 import stock_table_lib as stlib 
@@ -17,14 +17,15 @@ class Form(QDialog):
         super(Form, self).__init__(parent)
         
         layout = QHBoxLayout()
+        self.table = QTableWidget();
         
-        self.table=stlib.createTable(stock_data,stlib.TOTAL_FINANCE_LIST,stlib.FMT_NUM);
+        stlib.createTable(self.table,stock_data,stlib.TOTAL_FINANCE_LIST,stlib.FMT_NUM);
         layout.addWidget(self.table);
         
         # Set dialog layout
         self.setLayout(layout)
         
-        self.setGeometry(0, 0, 800, 250)
+        self.setGeometry(0, 0, 1600, 250)
         
 
         

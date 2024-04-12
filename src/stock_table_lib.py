@@ -1,8 +1,13 @@
 
-from PySide6.QtWidgets import QTableWidget
+from PySide6.QtWidgets import QLabel
+#from PySide6.QtWidgets import QTableWidget
 from PySide6.QtWidgets import QTableWidgetItem
 from PySide6.QtWidgets import QHeaderView
 from PySide6.QtGui     import QBrush
+from PySide6.QtCore    import Qt
+from PySide6.QtGui     import QFont
+from pyqtgraph import PlotWidget #, plot
+
 import yfinance as yf
 
 FMT_NUM="%.2f";
@@ -79,15 +84,15 @@ TOTAL_FINANCE_LIST=[
     }
 ];
 
-def createTable(stock_data,finance_list,fmt_num,color_data="#FFFDD0"): 
+def createTable(tableWidget,stock_data,finance_list,fmt_num,color_data="#FFFDD0",days_lplot=180,days_splot=15,font_size=15): 
 
-    title_list=["Name","Qty","Av.Price"];
+    title_list=["Name","Qty","Av.Price",str(days_lplot)+"D",str(days_splot)+"D"];
     
     for item in finance_list:
         title_list.append(item["title"]);
     
-    tableWidget = QTableWidget() ;
-
+    tableWidget.clear();
+    
     #Row count 
     tableWidget.setRowCount(len(stock_data.keys())) ; 
     #Column count 
@@ -103,17 +108,43 @@ def createTable(stock_data,finance_list,fmt_num,color_data="#FFFDD0"):
             stock_data[stock_name]["average-price"]
         ];
         
-        witem=QTableWidgetItem(basic_data[0]);
+        
+        witem=QTableWidgetItem(str(basic_data[0]));
         witem.setBackground(QBrush(color_data));
+        #witem.setTextAlignment(Qt.AlignRight );
+        #witem.setFlags(witem.flags() & ~Qt.ItemIsEditable);
         tableWidget.setItem(n,0, witem);
         
         witem=QTableWidgetItem(str(basic_data[1]));
         witem.setBackground(QBrush(color_data));
+        witem.setTextAlignment(Qt.AlignRight );
+        #witem.setFlags(witem.flags() & ~Qt.ItemIsEditable);
         tableWidget.setItem(n,1, witem);
         
         witem=QTableWidgetItem(fmt_num%(basic_data[2]));
         witem.setBackground(QBrush(color_data));
+        witem.setTextAlignment(Qt.AlignRight);
+        #witem.setFlags(witem.flags() & ~Qt.ItemIsEditable);
         tableWidget.setItem(n,2, witem);
+        
+        
+        witem = PlotWidget()
+        DATA=yf.download(stock_name, period=str(days_lplot)+'d')
+        prices=DATA['Adj Close'];
+        time=list(range(len(prices)));
+        witem.plot(time, prices)
+        witem.getPlotItem().getAxis('bottom').setStyle(showValues=False)
+        witem.getPlotItem().getAxis('left').setStyle(showValues=False)
+        tableWidget.setCellWidget(n,3, witem);
+        
+        witem = PlotWidget()
+        DATA=yf.download(stock_name, period=str(days_splot)+'d')
+        prices=DATA['Adj Close'];
+        time=list(range(len(prices)));
+        witem.plot(time, prices)
+        witem.getPlotItem().getAxis('bottom').setStyle(showValues=False)
+        witem.getPlotItem().getAxis('left').setStyle(showValues=False)
+        tableWidget.setCellWidget(n,4, witem);
         
         ## yfinance
         stock_obj=yf.Ticker(stock_name);
@@ -124,16 +155,38 @@ def createTable(stock_data,finance_list,fmt_num,color_data="#FFFDD0"):
                 item_str=item["func"](stock_obj.info[item["cmd"]],basic_data);
             else:
                 item_str='';
-            tableWidget.setItem(n,3+m, QTableWidgetItem(item_str));
+            
+            witem=QTableWidgetItem(item_str);
+            #witem.setTextAlignment(Qt.AlignRight );
+            #witem.setFlags(witem.flags() & ~Qt.ItemIsEditable);
+            tableWidget.setItem(n,5+m, witem);
             m=m+1;
         
         n=n+1;
     
-    #Table will fit the screen horizontally 
+    
+    ## Font
+    fnt=QFont();
+    fnt.setPointSize(font_size);
+    #fnt.setFamily("Arial");
+    
+    ## Table will fit the screen horizontally 
     #tableWidget.horizontalHeader().setStretchLastSection(True) 
     tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch) 
+    tableWidget.horizontalHeader().setFont(fnt);
     
-    tableWidget.setStyleSheet("background-color: #E8E8E8")
+    ## Background
+    tableWidget.setStyleSheet("background-color: #E8E8E8");
     
+    
+    ## Table font
+    rowCount = tableWidget.rowCount();
+    columnCount = tableWidget.columnCount();
+    for i in range(rowCount):
+        for j in range(columnCount):
+            try:
+                tableWidget.item(i, j).setFont(fnt);
+            except:
+                pass;
     return tableWidget
 
