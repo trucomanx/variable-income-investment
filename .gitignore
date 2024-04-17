@@ -1,9 +1,4 @@
-/src/__pycache__/stock_table_lib.cpython-310.pyc
-/src/__pycache__/stock_table_lib.cpython-38.pyc
-/src1/__pycache__/stock_data_lib.cpython-310.pyc
-/src1/__pycache__/stock_table_lib.cpython-310.pyc
-/src1/__pycache__/stock_data_lib.cpython-38.pyc
-/src1/__pycache__/functions_fundamental_valuation.cpython-38.pyc
-/src1/__pycache__/functions_gain.cpython-38.pyc
-/src1/__pycache__/functions_hist.cpython-38.pyc
-/src1/__pycache__/functions_info.cpython-38.pyc
+/src/__pycache__
+/src1/__pycache__
+/src1/stock/__pycache__
+/src1/stock/indicators/__pycache__

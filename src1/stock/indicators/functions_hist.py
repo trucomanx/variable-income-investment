@@ -29,3 +29,14 @@ def add_data_longDataPrices(stock_data,stock_name,stock_obj,days_plot=180):
     
     stock_data[stock_name]['longDataPrices']={'time': time,'price': price};
 
+################################################################################
+################################################################################
+################################################################################
+
+def add_history_indicators(stock_data,stock_name,stock_obj):
+    add_data_shortDiffPercent(stock_data,stock_name,stock_obj);
+    add_data_shortDataPrices(stock_data,stock_name,stock_obj);
+    add_data_longDiffPercent(stock_data,stock_name,stock_obj);
+    add_data_longDataPrices(stock_data,stock_name,stock_obj);
+
+
