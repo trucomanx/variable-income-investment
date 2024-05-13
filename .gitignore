@@ -1,4 +1,5 @@
-/src/__pycache__
-/src1/__pycache__
-/src1/stock/__pycache__
-/src1/stock/indicators/__pycache__
+/lib/__pycache__
+/lib/stock/__pycache__
+/lib/stock/indicators/__pycache__
+/gui/__pycache__
+
