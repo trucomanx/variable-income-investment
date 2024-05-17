@@ -2,4 +2,10 @@
 /lib/stock/__pycache__
 /lib/stock/indicators/__pycache__
 /gui/__pycache__
-
+/gui-ex1/.qtcreator/
+/gui-ex1/gui/__pycache__
+/gui-ex2/.qtcreator
+/gui-ex2/gui/__pycache__
+/gui-ex1/variable-income-investment.pyproject.user
+/gui-ex2/variable-income-investment.pyproject.user
+/lib/output

@@ -105,7 +105,7 @@ def createTable(tableWidget,stock_data,finance_list,fmt_num,color_data="#FFFDD0"
         basic_data=[
             stock_name,
             stock_data[stock_name]["qty"],
-            stock_data[stock_name]["average-price"]
+            stock_data[stock_name]["averagePrice"]
         ];
         
         

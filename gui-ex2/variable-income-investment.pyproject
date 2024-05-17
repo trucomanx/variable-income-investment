@@ -1,0 +1,3 @@
+{
+    "files": ["gui/main.py","gui/stock_table_lib.py"]
+}

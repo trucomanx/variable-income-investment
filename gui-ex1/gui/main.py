@@ -30,7 +30,7 @@ class Form(QDialog):
 
         
         
-stock_input_path="../example/input-stock.json"
+stock_input_path="../../example/input-stock.json"
 
 def load_stock_from_json_file(filepath):
     f = open(filepath) 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     keysList = list(stock_data.keys())
     
     for key in keysList:
-        print(key,stock_data[key]["qty"],stock_data[key]["average-price"]);
+        print(key,stock_data[key]["qty"],stock_data[key]["averagePrice"]);
     
 
     # Create the Qt Application

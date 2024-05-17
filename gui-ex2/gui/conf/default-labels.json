@@ -1,0 +1,26 @@
+{
+    "qty":
+    {
+        "type":"int",
+        "data":
+        {
+            "background":"#f7f2d2"
+        }
+    }, 
+    "averagePrice":
+    {
+        "type":"float",
+        "data":
+        {
+            "background":"#f7f2d2"
+        }
+    },
+    "currentPrice":
+    {
+        "type":"float",
+    },
+    "longName":
+    {
+        "type":"string",
+    },
+}
