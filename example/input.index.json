@@ -1,0 +1,46 @@
+{
+    "basic":
+    {
+        "qty": {"title":"Qtty"},
+        "averagePrice": {"title":"Av. Price"}
+    },
+    "information":
+    {
+        "currentPrice":{"title":"Price"},
+        "longName":{"title":"Name"}
+    },
+    "gain":
+    {
+        "initialAmount":{"title":"I. Amount"},
+        "finalAmount":{"title":"F. Amount"},
+        "gainAmountPercentage":{"title":"Gain %"}
+    },
+    "history":
+    {
+        "longDiffPercent":{"title":"L. Diff %"},
+        "longDataPrices":{"title":"L. Prices"},
+        "shortDiffPercent":{"title":"S. Diff %"},
+        "shortDataPrices":{"title":"S. Prices"}
+    },
+    "fundamental-valuation":
+    {
+        "trailingAnnualDividendYield":{"title":"DY %"},
+        "bookValue":{"title":"BV"},
+        "priceToBook":{"title":"P/B"},
+        "trailingPE":{"title":"P/E"}
+    },
+    "fundamental-profit":
+    {
+        "trailingEps":{"title":"EPS"},
+        "payoutRatio":{"title":"Payout"}
+    },
+    "fundamental-indebtedness":
+    {
+        "debtToEquity":{"title":"DebToEq"}
+    },
+    "fundamental-fair-price":
+    {
+        "trailingGrahamValue":{"title":"Graham"},
+        "trailingBazinValue":{"title":"Bazin"}
+    }
+}

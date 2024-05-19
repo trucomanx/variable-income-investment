@@ -87,17 +87,17 @@ TOTAL_FINANCE_LIST=[
 def createTable(tableWidget,stock_data,finance_list,fmt_num,color_data="#FFFDD0",days_lplot=180,days_splot=15,font_size=15): 
 
     title_list=["Name","Qty","Av.Price",str(days_lplot)+"D",str(days_splot)+"D"];
-    
+
     for item in finance_list:
         title_list.append(item["title"]);
-    
+
     tableWidget.clear();
-    
+
     #Row count 
     tableWidget.setRowCount(len(stock_data.keys())) ; 
     #Column count 
     tableWidget.setColumnCount(len(title_list));
-    
+
     tableWidget.setHorizontalHeaderLabels(title_list)
     
     n=0;

@@ -4,7 +4,8 @@
         "type":"int",
         "data":
         {
-            "background":"#f7f2d2"
+            "backgroundThresholds":[0.0],
+            "backgroundColors":["#ff0000","#f7f2d2"]
         }
     }, 
     "averagePrice":
@@ -12,15 +13,33 @@
         "type":"float",
         "data":
         {
-            "background":"#f7f2d2"
+            "backgroundThresholds":[0.0],
+            "backgroundColors":["#ff0000","#f7f2d2"]
         }
     },
-    "currentPrice":
-    {
-        "type":"float",
-    },
-    "longName":
-    {
-        "type":"string",
-    },
+    
+    "currentPrice":{"type":"float"},
+    "longName"    :{"type":"string"},
+    
+    "initialAmount"       :{"type":"float"},
+    "finalAmount"         :{"type":"float"},
+    "gainAmountPercentage":{"type":"float"},
+    
+    "longDiffPercent" :{"type":"float"},
+    "longDataPrices"  :{"type":"plot"},
+    "shortDiffPercent":{"type":"float"},
+    "shortDataPrices" :{"type":"plot"},
+    
+    "trailingAnnualDividendYield":{"type":"float"},
+    "bookValue"                  :{"type":"float"},
+    "priceToBook"                :{"type":"float"},
+    "trailingPE"                 :{"type":"float"},
+    
+    "trailingEps":{"type":"float"},
+    "payoutRatio":{"type":"float"},
+    
+    "debtToEquity":{"type":"float"},
+    
+    "trailingGrahamValue":{"type":"float"},
+    "trailingBazinValue" :{"type":"float"},
 }

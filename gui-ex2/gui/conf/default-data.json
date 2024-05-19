@@ -1,0 +1,28 @@
+{
+    "int":
+    {
+        "format":"%d",
+        "title":null,
+        "backgroundThresholds":[0.0],
+        "backgroundColors":["#ff0000","#dfdfdf"]
+    },
+    "float":
+    {
+        "format":"%.2f",
+        "title":null,
+        "backgroundThresholds":[0.0],
+        "backgroundColors":["#ff0000","#dfdfdf"]
+    },
+    "string":
+    {
+        "format":"%s",
+        "title":null,
+        "background":"#dfdfdf",
+        "link":"https://finance.yahoo.com/quote/{TICKET}"
+    },
+    "plot":
+    {
+        "title":null,
+        "background":"#dfdfdf"
+    }
+}
