@@ -1,31 +1,28 @@
-# This Python file uses the following encoding: utf-8
 import sys
 import os
 import json
 
-from PySide6.QtWidgets import ( QTableWidget,
-                                QGridLayout,
-                                #QLabel,
-                                QLineEdit,
-                                QPushButton,
-                                QApplication,
-                                QVBoxLayout,
-                                QFileDialog,
-                                QDialog)
-    
-import stock_table_lib as stlib 
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QGridLayout
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QProgressBar
+from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QTableWidget
 
-class Form(QDialog):
+from PyQt5.QtWidgets import QWidget
 
-    def __init__(self, parent=None):
-    
-        self.RowItem={};
-
-            
-        super(Form, self).__init__(parent)
+import ClassWorkerThread as cwt
         
-        layout = QVBoxLayout();
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
 
+        self.setWindowTitle("Progress Bar Demo")
+        layout = QVBoxLayout()
+        
         gridLayout = QGridLayout();
         self.btnOpenStockList=QPushButton("Open stock list");
         self.btnOpenStockList.clicked.connect(self.select_stock_json_file)
@@ -38,20 +35,53 @@ class Form(QDialog):
         gridLayout.addWidget(self.btnOpenIndexList,1,0);
         gridLayout.addWidget(self.lineditIndexList,1,1);
         layout.addLayout(gridLayout);
-
-        self.btnGenerate=QPushButton("Generate");
-        self.btnGenerate.clicked.connect(self.generate);
-        layout.addWidget(self.btnGenerate);
-
+        
+        self.start_button = QPushButton("Start Work");
+        self.start_button.clicked.connect(self.start_work);
+        layout.addWidget(self.start_button);
+        
+        self.progress_bar = QProgressBar();
+        self.progress_bar.setMinimum(0);
+        layout.addWidget(self.progress_bar);
+        
         self.table = QTableWidget();
-
         layout.addWidget(self.table);
         
-        # Set dialog layout
         self.setLayout(layout)
+        self.setGeometry(0, 0, 1600, 250);
         
-        self.setGeometry(0, 0, 1600, 250)
+    def start_work(self):
+        fileStock=self.lineditStockList.text();
+        fileIndex=self.lineditIndexList.text();
         
+        fileStock_exists = os.path.exists(self.lineditStockList.text());
+        fileIndex_exists = os.path.exists(self.lineditIndexList.text());
+        
+        if fileStock_exists and fileIndex_exists:
+            stock_data = json.load(open(fileStock));
+            index_data = json.load(open(fileIndex));
+            
+            self.progress_bar.setMaximum(len(stock_data));
+            
+            self.thread = cwt.WorkerThread(stock_data,index_data,self.table);
+            self.thread.update_progress.connect(self.update_progress_bar);
+            self.thread.start();
+        
+        if fileStock_exists==False:
+            reply = QMessageBox.question(   self, 
+                                            'Error open the stock file', 
+                                            "The stock file no exist: "+fileStock,
+                                            QMessageBox.Ok);
+        
+        if fileIndex_exists==False:
+            reply = QMessageBox.question(   self, 
+                                            'Error open the index file', 
+                                            "The index file no exist: "+fileIndex,
+                                            QMessageBox.Ok);
+    
+    def update_progress_bar(self, value):
+        self.progress_bar.setValue(value);
+    
     def select_stock_json_file(self):
         # Crear un cuadro de diálogo de selección de archivo
         options = QFileDialog.Options()
@@ -65,41 +95,18 @@ class Form(QDialog):
             self.lineditStockList.setText(fileName);
 
     def select_index_json_file(self):
-                # Crear un cuadro de diálogo de selección de archivo
-                options = QFileDialog.Options()
-                options |= QFileDialog.ReadOnly
-                fileName, _ = QFileDialog.getOpenFileName(  self,
-                                                            "Seleccionar archivo",
-                                                            "",
-                                                            "JSON Files (*.index.json);;All Files (*)",
-                                                            options=options);
-                if fileName:
-                    self.lineditIndexList.setText(fileName);
-
-    def generate(self):
-        fileStock=self.lineditStockList.text();
-        fileIndex=self.lineditIndexList.text();
-
-        fileStock_exists = os.path.exists(self.lineditStockList.text());
-        fileIndex_exists = os.path.exists(self.lineditIndexList.text());
-
-
-        if fileStock_exists and fileIndex_exists:
-            stock_data = json.load(open(fileStock));
-            index_data = json.load(open(fileIndex));
-
-            stlib.createTable(self.table,stock_data,stlib.TOTAL_FINANCE_LIST,stlib.FMT_NUM);
-
-
-if __name__ == "__main__":
-
-    # Opening JSON file 
-    
-
-    # Create the Qt Application
+        # Crear un cuadro de diálogo de selección de archivo
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        fileName, _ = QFileDialog.getOpenFileName(  self,
+                                                    "Seleccionar archivo",
+                                                    "",
+                                                    "JSON Files (*.index.json);;All Files (*)",
+                                                    options=options);
+        if fileName:
+            self.lineditIndexList.setText(fileName);
+if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # Create and show the form
-    form = Form()
-    form.show()
-    # Run the main Qt loop
-    sys.exit(app.exec())
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())

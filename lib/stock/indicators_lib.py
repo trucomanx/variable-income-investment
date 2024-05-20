@@ -27,10 +27,10 @@ import stock.indicators.functions_fundamental_price as funcs_fpri
 ################################################################################
 ################################################################################
 
-def get_stock_data_full(stock_data):
+def get_stock_data_full(stock_data,emit=None):
     stock_data_full=stock_data.copy();
     
-    for stock_name in stock_data_full:
+    for i,stock_name in enumerate(stock_data_full.keys()):
         stock_obj=yf.Ticker(stock_name);
         
         #print(stock_obj.actions,'\n');
@@ -58,5 +58,8 @@ def get_stock_data_full(stock_data):
         
         ## Fundamental fair price Indicators:
         funcs_fpri.add_fundamental_fair_price_indicators(stock_data_full,stock_name,stock_obj);
+        
+        if emit!=None:
+            emit(i+1);
         
     return stock_data_full

@@ -41,5 +41,5 @@
     "debtToEquity":{"type":"float"},
     
     "trailingGrahamValue":{"type":"float"},
-    "trailingBazinValue" :{"type":"float"},
+    "trailingBazinValue" :{"type":"float"}
 }
